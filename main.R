@@ -1,3 +1,8 @@
+### Week 1
+### MGI
+### Regression for Spatial Data
+### Margret Azuma & Chloé Girka
+
 library(raster)
 library(FNN) #library for KNN
 library(ggplot2) #library for plotting
@@ -20,8 +25,13 @@ data <- data[2:nrow(data),]
 #put the right name for the rows
 rownames(data) <- c(paste("Sample", seq_len(nrow(data)), sep = "_"))
 #and for the columns
+<<<<<<< HEAD
 #?
 #colnames(data) <- c()
+=======
+
+colnames(data) <- colnames(data) <- c("Chlorophyll", "LAI", "FCover", wavelengths[,4:65])
+>>>>>>> 80309f065d018e62602fd454135334e53590165b
 
 ###Visualization histogram of chlorophyll###
 graphics.off()
