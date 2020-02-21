@@ -1,7 +1,7 @@
 ### Week 1
 ### MGI
 ### Regression for Spatial Data
-### Margret Azuma & ChloÃ© Girka
+### Margret Azuma & Chloé Girka
 
 library(raster)
 library(FNN) #library for KNN
@@ -22,21 +22,21 @@ wavelengths <- data[4,]
 
 #remove the first row
 data <- data[2:nrow(data),]
+
 #put the right name for the rows
 rownames(data) <- c(paste("Sample", seq_len(nrow(data)), sep = "_"))
-#and for the columns
-<<<<<<< HEAD
-#?
-#colnames(data) <- c()
-=======
 
+#and for the columns
 colnames(data) <- colnames(data) <- c("Chlorophyll", "LAI", "FCover", wavelengths[,4:65])
->>>>>>> 80309f065d018e62602fd454135334e53590165b
+
 
 ###Visualization histogram of chlorophyll###
 graphics.off()
-#?
 #Use hist() function
+chrolophyll <- data$Chlorophyll
+hist(chrolophyll,
+     xlab = 'Chrolophyll Content')
+summary(hist)
 
 ###Show spectral values (unormalized)###
 graphics.off()
