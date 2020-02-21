@@ -32,18 +32,15 @@ colnames(data) <- colnames(data) <- c("Chlorophyll", "LAI", "FCover", wavelength
 
 ###Visualization histogram of chlorophyll###
 graphics.off()
-<<<<<<< HEAD
 #Use hist() function
 chrolophyll <- data$Chlorophyll
 hist(chrolophyll,
      xlab = 'Chrolophyll Content')
 summary(hist)
-=======
-chlorophyll <- as.vector(data$Chlorophyll)
 hist(chlorophyll)
 #Some additional statistics on chlorophyll for a better insight
 summary(chlorophyll)
->>>>>>> b8fd17f83301afeb70eb8e7ac558d21bcfe0dc7c
+
 
 ###Show spectral values (unormalized)###
 graphics.off()
