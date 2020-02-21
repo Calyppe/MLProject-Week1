@@ -8,17 +8,20 @@ rm(list=ls())
 ###read data###
 #Set the directory where you put the data
 #setwd("")
+
 #read the csv
 data <- as.data.frame(t(read.csv("J_SPARC_one_day.csv")))
+
 #obtain the wavelenghts
-wavelengths <- data[1,]
+wavelengths <- data[4,]
+
 #remove the first row
 data <- data[2:nrow(data),]
 #put the right name for the rows
 rownames(data) <- c(paste("Sample", seq_len(nrow(data)), sep = "_"))
 #and for the columns
 #?
-#colnames(data) <-
+#colnames(data) <- c()
 
 ###Visualization histogram of chlorophyll###
 graphics.off()
