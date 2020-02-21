@@ -47,19 +47,20 @@ ggplot(data=spectral_val, aes(x=Wavelengths, y=Val, color=ID, shape=ID)) + geom_
 
 
 ###perform train/test split###
-train_samples <- #?
-test_samples <- #?
+set.seed(90)
+train_samples <- sample(seq_len(nrow(data)), size = 90)
 
-train_ground_truth <- #?
-test_ground_truth <- #?
+train_ground_truth <- data[train_samples,-(2:3)]
+test_ground_truth <- data[-train_samples,-(2:3)]
 
 
 ###Apply linear model###
-linear_reg <- #?
-pred_test <- predict(linear_reg, test_samples)
-RMSE_linear <- #?
-MAE_linear <- #?
-R2_linear <- #?
+linear_reg <- lm(Chlorophyll~., data=train_ground_truth)
+pred_test <- predict(linear_reg, test_ground_truth)
+RMSE_linear <- sqrt(mean((test_ground_truth$Chlorophyll-pred_test)^2))
+MAE_linear <- mean(abs(test_ground_truth$Chlorophyll-pred_test))
+R2_linear <- 1 - sum((test_ground_truth$Chlorophyll-pred_test)^2)/sum((test_ground_truth$Chlorophyll-mean(test_ground_truth$Chlorophyll))^2)
+
 
 ###normalize data###
 data_norm <- data
