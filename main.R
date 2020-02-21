@@ -27,15 +27,17 @@ colnames(data) <- colnames(data) <- c("Chlorophyll", "LAI", "FCover", wavelength
 
 ###Visualization histogram of chlorophyll###
 graphics.off()
-#?
-#Use hist() function
+chlorophyll <- as.vector(data$Chlorophyll)
+hist(chlorophyll)
+#Some additional statistics on chlorophyll for a better insight
+summary(chlorophyll)
 
 ###Show spectral values (unormalized)###
 graphics.off()
-sample_id = #?
+sample_id = 11
 spectral_val <- data.frame(t(wavelengths[1,4:ncol(wavelengths)]), t(data[sample_id,4:ncol(data)]), paste("Sample",sample_id,sep = " "))
 colnames(spectral_val) <- c("Wavelengths", "Val", "ID")
-sample_id = #?
+sample_id = 100
 spectral_val2 <- data.frame(t(wavelengths[1,4:ncol(wavelengths)]), t(data[sample_id,4:ncol(data)]), paste("Sample",sample_id,sep = " "))
 colnames(spectral_val2) <- c("Wavelengths", "Val", "ID")
 spectral_val <- rbind(spectral_val, spectral_val2)
