@@ -1,0 +1,6 @@
+# files to ignore
+data/
+output/
+.RData
+.Rhistory
+.idea/
