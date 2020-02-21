@@ -13,24 +13,32 @@ rm(list=ls())
 ###read data###
 #Set the directory where you put the data
 #setwd("")
+
 #read the csv
 data <- as.data.frame(t(read.csv("J_SPARC_one_day.csv")))
+
 #obtain the wavelenghts
 wavelengths <- data[1,]
+
 #remove the first row
 data <- data[2:nrow(data),]
+
 #put the right name for the rows
 rownames(data) <- c(paste("Sample", seq_len(nrow(data)), sep = "_"))
-#and for the columns
 
+#and for the columns
 colnames(data) <- colnames(data) <- c("Chlorophyll", "LAI", "FCover", wavelengths[,4:65])
+
 
 ###Visualization histogram of chlorophyll###
 graphics.off()
-chlorophyll <- as.vector(data$Chlorophyll)
-hist(chlorophyll)
+#Use hist() function
+chlorophyll <- data$Chlorophyll
+hist(chlorophyll,
+     xlab = 'Chlorophyll Content')
 #Some additional statistics on chlorophyll for a better insight
 summary(chlorophyll)
+
 
 ###Show spectral values (unormalized)###
 graphics.off()
@@ -43,13 +51,9 @@ colnames(spectral_val2) <- c("Wavelengths", "Val", "ID")
 spectral_val <- rbind(spectral_val, spectral_val2)
 ggplot(data=spectral_val, aes(x=Wavelengths, y=Val, color=ID, shape=ID)) + geom_point() + geom_line(linetype = "dashed")
 
-
-
-
 ###perform train/test split###
 set.seed(90)
 train_samples <- sample(seq_len(nrow(data)), size = 90)
-
 train_ground_truth <- data[train_samples,-(2:3)]
 test_ground_truth <- data[-train_samples,-(2:3)]
 
@@ -57,10 +61,10 @@ test_ground_truth <- data[-train_samples,-(2:3)]
 ###Apply linear model###
 linear_reg <- lm(Chlorophyll~., data=train_ground_truth)
 pred_test <- predict(linear_reg, test_ground_truth)
+
 RMSE_linear <- sqrt(mean((test_ground_truth$Chlorophyll-pred_test)^2))
 MAE_linear <- mean(abs(test_ground_truth$Chlorophyll-pred_test))
 R2_linear <- 1 - sum((test_ground_truth$Chlorophyll-pred_test)^2)/sum((test_ground_truth$Chlorophyll-mean(test_ground_truth$Chlorophyll))^2)
-
 
 ###normalize data###
 data_norm <- data
