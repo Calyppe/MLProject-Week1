@@ -64,12 +64,29 @@ R2_linear <- 1 - sum((test_ground_truth$Chlorophyll-pred_test)^2)/sum((test_grou
 
 ###normalize data###
 data_norm <- data
-data_norm[,4:65] <- #?
+data_norm[,4:65] <- data_norm[,4:65] / data_norm[,54]
 
 ###Show spectral values after normalization###
+graphics.off()
+sample_id = 11
+spectral_val <- data.frame(t(wavelengths[1,4:ncol(wavelengths)]), t(data_norm[sample_id,4:ncol(data)]), paste("Sample",sample_id,sep = " "))
+colnames(spectral_val) <- c("Wavelengths", "Val", "ID")
+sample_id = 100
+spectral_val2 <- data.frame(t(wavelengths[1,4:ncol(wavelengths)]), t(data_norm[sample_id,4:ncol(data)]), paste("Sample",sample_id,sep = " "))
+colnames(spectral_val2) <- c("Wavelengths", "Val", "ID")
+spectral_val <- rbind(spectral_val, spectral_val2)
+ggplot(data=spectral_val, aes(x=Wavelengths, y=Val, color=ID, shape=ID)) + geom_point() + geom_line(linetype = "dashed")
 
 
 ###apply linear regression after normalization###
+train_ground_truth <- data_norm[train_samples,-(2:3)]
+test_ground_truth <- data_norm[-train_samples,-(2:3)]
+
+linear_reg <- lm(Chlorophyll~., data=train_ground_truth)
+pred_test <- predict(linear_reg, test_ground_truth)
+RMSE_linear <- sqrt(mean((test_ground_truth$Chlorophyll-pred_test)^2))
+MAE_linear <- mean(abs(test_ground_truth$Chlorophyll-pred_test))
+R2_linear <- 1 - sum((test_ground_truth$Chlorophyll-pred_test)^2)/sum((test_ground_truth$Chlorophyll-mean(test_ground_truth$Chlorophyll))^2)
 
 
 ###Visualize linear model coeffs###
